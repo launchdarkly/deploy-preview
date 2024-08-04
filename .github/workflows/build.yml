@@ -24,7 +24,7 @@ jobs:
 
       - run: |
           echo "${{ toJSON(github) }}"
-          echo ${{ github.repository_owner }}
+          echo ${{ github.event.ref_name }}
 
       - if: github.event_name != 'release'
         name: Get short SHA
@@ -38,4 +38,4 @@ jobs:
           push: ${{ github.event_name == 'release' }}
           tags: |
             ghcr.io/${{ github.repository }}:${{ github.event_name == 'release' && 'latest' || 'unstable' }}
-            ghcr.io/${{ github.repository }}:${{ github.event_name == 'release' && github.event.release.name || env.SHORT_SHA }}
+            ghcr.io/${{ github.repository }}:${{ github.event_name == 'release' && github.event.ref_name || env.SHORT_SHA }}
