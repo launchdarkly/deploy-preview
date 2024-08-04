@@ -1,8 +1,10 @@
-FROM okteto/okteto:latest as okteto
+ARG OKTETO_VERSION=latest
+
+FROM okteto/okteto:${OKTETO_VERSION} AS okteto
 
 FROM golang:1.22 as builder
 WORKDIR /app
-ENV GO111MODULE=ON
+ENV GO111MODULE=on
 COPY . .
 RUN go build -o /deploy-preview .
 
