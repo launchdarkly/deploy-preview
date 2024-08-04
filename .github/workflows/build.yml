@@ -22,9 +22,13 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - run: echo "${{ toJSON(github) }}"
+
       - if: github.event_name != 'release'
         name: Get short SHA
-        run: echo "SHORT_SHA=${GITHUB_SHA:0:9}" >> $GITHUB_ENV
+        run: |
+          echo "SHORT_SHA=${GITHUB_SHA:0:9}" >> $GITHUB_ENV
+          echo ${{ github.repository_owner }}
 
       - name: Build and push
         uses: docker/build-push-action@v6
