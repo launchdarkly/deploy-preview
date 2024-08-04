@@ -38,4 +38,4 @@ jobs:
           push: ${{ github.event_name == 'release' }}
           tags: |
             ghcr.io/${{ github.repository }}:${{ github.event_name == 'release' && 'latest' || 'unstable' }}
-            ghcr.io/${{ github.repository }}:${{ github.event_name == 'release' && github.event.ref_name || env.SHORT_SHA }}
+            ghcr.io/${{ github.repository }}:${{ github.event_name == 'release' && github.ref_name || env.SHORT_SHA }}
