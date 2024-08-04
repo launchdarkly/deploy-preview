@@ -22,13 +22,14 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: echo "${{ toJSON(github) }}"
+      - run: |
+          echo "${{ toJSON(github) }}"
+          echo ${{ github.repository_owner }}
 
       - if: github.event_name != 'release'
         name: Get short SHA
         run: |
           echo "SHORT_SHA=${GITHUB_SHA:0:9}" >> $GITHUB_ENV
-          echo ${{ github.repository_owner }}
 
       - name: Build and push
         uses: docker/build-push-action@v6
@@ -36,5 +37,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name == 'release' }}
           tags: |
-            ghcr.io/${{ github.repository_owner }}:${{ github.event_name == 'release' && 'latest' || 'unstable' }}
-            ghcr.io/${{ github.repository_owner }}:${{ github.event_name == 'release' && github.event.release.name || env.SHORT_SHA }}
+            ghcr.io/${{ github.repository }}:${{ github.event_name == 'release' && 'latest' || 'unstable' }}
+            ghcr.io/${{ github.repository }}:${{ github.event_name == 'release' && github.event.release.name || env.SHORT_SHA }}
