@@ -1,4 +1,6 @@
-FROM okteto/okteto:latest as okteto
+ARG OKTETO_VERSION=latest
+
+FROM okteto/okteto:${OKTETO_VERSION} AS okteto
 
 FROM golang:1.22 as builder
 WORKDIR /app
